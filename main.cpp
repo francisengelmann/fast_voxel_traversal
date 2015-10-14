@@ -7,7 +7,7 @@
  * J. Amanatides, A. Woo. A Fast Voxel Traversal Algorithm for Ray Tracing. Eurographics '87
  */
  
-std::vector<Eigen::Vector3i> TSDF::rayCasting(Eigen::Vector3d ray_start, Eigen::Vector3d ray_end) {
+std::vector<Eigen::Vector3i> voxel_traversal(Eigen::Vector3d ray_start, Eigen::Vector3d ray_end) {
   std::vector<Eigen::Vector3i> visited_voxels;
 
   // This id of the first/current voxel hit by the ray.
@@ -94,4 +94,9 @@ std::vector<Eigen::Vector3i> TSDF::rayCasting(Eigen::Vector3d ray_start, Eigen::
     }*/
   }
   return visited_voxels;
+}
+
+int main (int, char**) {
+ // TODO: call method on example data
+ return 0;
 }
