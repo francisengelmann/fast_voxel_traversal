@@ -1,15 +1,16 @@
 // C/C++ includes
 #include <cfloat>
 #include <vector>
+#include <iostream>
 
 //Eigen includes
 #include <Eigen/Core>
 
-double _bin_size = 0.1;
+double _bin_size = 1;
 
 /**
- * @brief TSDF::rayCasting returns all the voxels that are traversed by a ray going from start to end
- * @param start : continous world position wheray_startre the ray starts
+ * @brief returns all the voxels that are traversed by a ray going from start to end
+ * @param start : continous world position where the ray starts
  * @param end   : continous world position where the ray end
  * @return vector of voxel ids hit by the ray in temporal order
  *
@@ -63,8 +64,6 @@ std::vector<Eigen::Vector3i> voxel_traversal(Eigen::Vector3d ray_start, Eigen::V
   if (current_voxel[0]!=last_voxel[0] && ray[0]<0) {current_voxel[0]--;}
   if (current_voxel[1]!=last_voxel[1] && ray[1]<0) {current_voxel[1]--;}
   if (current_voxel[2]!=last_voxel[2] && ray[2]<0) {current_voxel[2]--;}
-
-  //Eigen::Vector3i first_voxel = current_voxel;
   visited_voxels.push_back(current_voxel);
 
   while(last_voxel != current_voxel) {
@@ -85,27 +84,20 @@ std::vector<Eigen::Vector3i> voxel_traversal(Eigen::Vector3d ray_start, Eigen::V
         tMaxZ += tDeltaZ;
       }
     }
-
     visited_voxels.push_back(current_voxel);
-    /***
-     * For debugging: if the voxels along the ray become too many,
-     * we probably passed the targeted measurement.
-     *
-    if (visited_voxels.size() == 5000) {
-      std::cout << std::endl;
-      std::cout << "TOO MANY ELEMENTS! STOPING" << std::endl;
-      std::cout << "First voxel: " << first_voxel[0] << "," << first_voxel[1] << "," << first_voxel[2] << std::endl;
-      std::cout << "Last voxel: " << last_voxel[0] << "," << last_voxel[1] << "," << last_voxel[2] << std::endl;
-      std::cout << "Ray: " << ray[0] << ", " << ray[1] << ", " << ray[2] << std::endl;
-      std::cout << "Ray Start: " << ray_start[0] << ", " << ray_start[1] << ", " << ray_start[2] << std::endl;
-      std::cout << "Ray End: " << ray_end[0] << ", " << ray_end[1] << ", " << ray_end[2] << std::endl;
-      break;
-    }*/
   }
   return visited_voxels;
 }
 
 int main (int, char**) {
- // TODO: call method on example data
- return 0;
+  Eigen::Vector3d ray_start(0,0,0);
+  Eigen::Vector3d ray_end(3,2,2);
+  std::cout << "Starting position: " << ray_start.transpose() << std::endl;
+  std::cout << "Ending position: " << ray_end.transpose() << std::endl;
+  std::cout << "Voxel ID's from start to end:" << std::endl;
+  std::vector<Eigen::Vector3i> ids = voxel_traversal(ray_start,ray_end);
+  for (auto& i : ids) {
+    std::cout << "> " << i.transpose() << std::endl;
+  }
+  return 0;
 }
