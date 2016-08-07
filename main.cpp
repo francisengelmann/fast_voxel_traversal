@@ -1,3 +1,12 @@
+// C/C++ includes
+#include <cfloat>
+#include <vector>
+
+//Eigen includes
+#include <Eigen/Core>
+
+double _bin_size = 0.1;
+
 /**
  * @brief TSDF::rayCasting returns all the voxels that are traversed by a ray going from start to end
  * @param start : continous world position wheray_startre the ray starts
@@ -6,7 +15,7 @@
  *
  * J. Amanatides, A. Woo. A Fast Voxel Traversal Algorithm for Ray Tracing. Eurographics '87
  */
- 
+
 std::vector<Eigen::Vector3i> voxel_traversal(Eigen::Vector3d ray_start, Eigen::Vector3d ray_end) {
   std::vector<Eigen::Vector3i> visited_voxels;
 
