@@ -6,7 +6,7 @@
 //Eigen includes
 #include <Eigen/Core>
 
-double _bin_size = 16;
+double _bin_size = 1;
 
 /**
  * @brief returns all the voxels that are traversed by a ray going from start to end
@@ -61,10 +61,16 @@ std::vector<Eigen::Vector3i> voxel_traversal(Eigen::Vector3d ray_start, Eigen::V
   double tDeltaY = (ray[1]!=0) ? _bin_size/ray[1]*stepY : DBL_MAX;
   double tDeltaZ = (ray[2]!=0) ? _bin_size/ray[2]*stepZ : DBL_MAX;
 
-  if (current_voxel[0]!=last_voxel[0] && ray[0]<0) {current_voxel[0]--;}
-  if (current_voxel[1]!=last_voxel[1] && ray[1]<0) {current_voxel[1]--;}
-  if (current_voxel[2]!=last_voxel[2] && ray[2]<0) {current_voxel[2]--;}
+  Eigen::Vector3i diff(0,0,0);
+  bool neg_ray=false;
+  if (current_voxel[0]!=last_voxel[0] && ray[0]<0) { diff[0]--; neg_ray=true; }
+  if (current_voxel[1]!=last_voxel[1] && ray[1]<0) { diff[1]--; neg_ray=true; }
+  if (current_voxel[2]!=last_voxel[2] && ray[2]<0) { diff[2]--; neg_ray=true; }
   visited_voxels.push_back(current_voxel);
+  if (neg_ray) {
+    current_voxel+=diff;
+    visited_voxels.push_back(current_voxel);
+  }
 
   while(last_voxel != current_voxel) {
     if (tMaxX < tMaxY) {
@@ -90,8 +96,9 @@ std::vector<Eigen::Vector3i> voxel_traversal(Eigen::Vector3d ray_start, Eigen::V
 }
 
 int main (int, char**) {
-  Eigen::Vector3d ray_start(-984, 670, -652);
-  Eigen::Vector3d ray_end(580, 423, -869);
+
+  Eigen::Vector3d ray_start(0.5,0.5,0.5);
+  Eigen::Vector3d ray_end(-1.5,0.5,0.5);
   std::cout << "Voxel size: " << _bin_size << std::endl;
   std::cout << "Starting position: " << ray_start.transpose() << std::endl;
   std::cout << "Ending position: " << ray_end.transpose() << std::endl;
