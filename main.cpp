@@ -6,7 +6,7 @@
 //Eigen includes
 #include <Eigen/Core>
 
-double _bin_size = 16;
+double _bin_size = 1;
 
 /**
  * @brief returns all the voxels that are traversed by a ray going from start to end
@@ -90,8 +90,8 @@ std::vector<Eigen::Vector3i> voxel_traversal(Eigen::Vector3d ray_start, Eigen::V
 }
 
 int main (int, char**) {
-  Eigen::Vector3d ray_start(-984, 670, -652);
-  Eigen::Vector3d ray_end(580, 423, -869);
+  Eigen::Vector3d ray_start(0,0,0);
+  Eigen::Vector3d ray_end(3,2,2);
   std::cout << "Voxel size: " << _bin_size << std::endl;
   std::cout << "Starting position: " << ray_start.transpose() << std::endl;
   std::cout << "Ending position: " << ray_end.transpose() << std::endl;
