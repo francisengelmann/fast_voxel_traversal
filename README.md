@@ -5,4 +5,4 @@ This is an implementation of Amanatides et al. [1]: Given a 3D voxel grid, a sta
 This project is licensed under the terms of the MIT license.
 
 #### References
-[1] J. Amanatides, A. Woo, A Fast Voxel Traversal Algorithm for Ray Tracing, Eurographics'87
+[1] J. Amanatides and A. Woo, A Fast Voxel Traversal Algorithm for Ray Tracing, Eurographics, 1987.
